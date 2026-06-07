@@ -4,6 +4,7 @@ import { create } from 'zustand';
 import type {
   CanvasElement,
   GridMode,
+  ShapeStyle,
   Tool,
   ViewportState,
 } from './types';
@@ -42,6 +43,10 @@ type CanvasStore = {
   // grid
   grid: GridMode;
   setGrid: (g: GridMode) => void;
+
+  // shape rendering style (clean vs sketchy)
+  shapeStyle: ShapeStyle;
+  setShapeStyle: (s: ShapeStyle) => void;
 
   // history
   past: HistoryEntry[];
@@ -95,6 +100,9 @@ export const useCanvas = create<CanvasStore>((set, get) => ({
 
   grid: 'dots',
   setGrid: (g) => set({ grid: g }),
+
+  shapeStyle: 'clean',
+  setShapeStyle: (s) => set({ shapeStyle: s }),
 
   past: [],
   future: [],

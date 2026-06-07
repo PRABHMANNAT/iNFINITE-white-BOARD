@@ -73,3 +73,5 @@ export type ViewportState = {
 };
 
 export type GridMode = 'none' | 'dots' | 'squares' | 'iso';
+
+export type ShapeStyle = 'clean' | 'sketchy';
