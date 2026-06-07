@@ -4,20 +4,33 @@ We ship in three layered milestones. Each milestone is releasable on its own.
 
 ---
 
-## M0 — Foundation (this repo, today)
+## M0 — Foundation (shipped)
 
-- [x] Repo + license + README
+- [x] Repo + license + README + CI + PR template
 - [x] Next.js 15 + React 19 + Tailwind scaffold
-- [x] Landing page (nav, hero, features, AI section, footer)
-- [x] Zustand canvas store + undo/redo
-- [x] Infinite canvas surface (pan, zoom, grid)
-- [x] Drawing tools (pen, highlighter, marker)
-- [x] Shape library (rect, ellipse, diamond, triangle, line, arrow)
-- [x] Text + sticky notes
+- [x] Landing — nav, hero (framer-motion), features, AI section, testimonials, pricing, FAQ, footer
+- [x] Light / dark / system theme via next-themes
+- [x] Zustand canvas store with persist middleware
+- [x] Infinite canvas (pan/zoom/grid) + minimap with click-to-jump
+- [x] Drawing tools: pen, marker, highlighter (perfect-freehand), laser pointer
+- [x] Eraser (functional, hit-test aware)
+- [x] Shape library + sketchy roughjs renderer toggle
+- [x] Text + sticky notes (inline editable, 8 pastel presets)
+- [x] Image element type + drag-drop + clipboard paste
+- [x] Selection — click, shift-click, marquee, drag-to-move
+- [x] Editing hotkeys via react-hotkeys-hook (Del, ⌘D, ⌘C/V, arrows, ⌘[/], ⌘A, Esc)
+- [x] Floating selection toolbar (duplicate, z-order, delete)
+- [x] Undo/redo + auto-save to localStorage
 - [x] Floating toolbar / style panel / zoom controls / minimap
-- [x] AI Copilot panel UI + starter mind-map generator
-- [x] Templates gallery
-- [x] Export to PNG / SVG / JSON, import JSON
+- [x] Tooltips, dialogs, dropdowns, popovers (radix-ui)
+- [x] Toast notifications (sonner)
+- [x] Command palette ⌘K (cmdk)
+- [x] Color picker (react-colorful)
+- [x] Zoom-to-fit content / selection
+- [x] AI Copilot panel + SSE `/api/ai/generate` stub
+- [x] Templates gallery with fuse.js fuzzy search
+- [x] Export to PNG/SVG/JSON via html-to-image (2× DPR), import JSON
+- [x] Branded 404 page + PWA manifest + icon
 - [x] Architecture + Prisma schema + API design docs
 
 ---
