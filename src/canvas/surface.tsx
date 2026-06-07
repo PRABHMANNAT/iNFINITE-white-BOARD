@@ -7,6 +7,7 @@ import { useDrawing } from './use-drawing';
 import { useSelection } from './use-selection';
 import { useEraser } from './use-eraser';
 import { useShortcuts } from './use-shortcuts';
+import { useCanvasHotkeys } from './use-canvas-hotkeys';
 import { GridLayer } from './grid';
 import { ElementRenderer } from './element-renderer';
 
@@ -23,6 +24,7 @@ export function CanvasSurface() {
   useSelection(containerRef, marqueeRef);
   useEraser(containerRef);
   useShortcuts();
+  useCanvasHotkeys();
 
   const cursor =
     tool === 'pan'
