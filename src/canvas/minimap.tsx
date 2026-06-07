@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useCanvas } from './store';
 
 const W = 200;
@@ -36,6 +36,14 @@ function elementBounds(el: { x?: number; y?: number; width?: number; height?: nu
 export function Minimap() {
   const elements = useCanvas((s) => s.elements);
   const viewport = useCanvas((s) => s.viewport);
+  const [size, setSize] = useState<{ w: number; h: number } | null>(null);
+
+  useEffect(() => {
+    const update = () => setSize({ w: window.innerWidth, h: window.innerHeight });
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   const bounds = useMemo(() => {
     let minX = -200, minY = -200, maxX = 200, maxY = 200;
@@ -54,10 +62,8 @@ export function Minimap() {
   const sy = H / Math.max(1, bounds.height);
   const s = Math.min(sx, sy);
 
-  // viewport rectangle in world coords
-  // The actual screen size is unknown here, approximate using zoom.
-  const vw = (typeof window !== 'undefined' ? window.innerWidth : 1200) / viewport.zoom;
-  const vh = (typeof window !== 'undefined' ? window.innerHeight : 800) / viewport.zoom;
+  const vw = size ? size.w / viewport.zoom : 0;
+  const vh = size ? size.h / viewport.zoom : 0;
   const vx = -viewport.x / viewport.zoom;
   const vy = -viewport.y / viewport.zoom;
 
@@ -80,15 +86,17 @@ export function Minimap() {
               />
             );
           })}
-          <rect
-            x={vx}
-            y={vy}
-            width={vw}
-            height={vh}
-            fill="hsl(var(--accent) / 0.12)"
-            stroke="hsl(var(--accent))"
-            strokeWidth={1 / s}
-          />
+          {size && (
+            <rect
+              x={vx}
+              y={vy}
+              width={vw}
+              height={vh}
+              fill="hsl(var(--accent) / 0.12)"
+              stroke="hsl(var(--accent))"
+              strokeWidth={1 / s}
+            />
+          )}
         </g>
       </svg>
     </div>
