@@ -3,6 +3,8 @@
 import { memo } from 'react';
 import type { CanvasElement } from './types';
 import { strokeToPath } from './freehand';
+import { SketchyShape } from './rough';
+import { useCanvas } from './store';
 
 export const ElementRenderer = memo(function ElementRenderer({
   el,
@@ -11,9 +13,27 @@ export const ElementRenderer = memo(function ElementRenderer({
   el: CanvasElement;
   selected?: boolean;
 }) {
+  const shapeStyle = useCanvas((s) => s.shapeStyle);
   const selOutline = selected
     ? { filter: 'drop-shadow(0 0 0.5px hsl(var(--accent))) drop-shadow(0 0 4px hsl(var(--accent) / 0.5))' }
     : undefined;
+
+  // Sketchy renderer covers shapes only. Strokes, text, sticky always render normally.
+  if (
+    shapeStyle === 'sketchy' &&
+    (el.type === 'rectangle' ||
+      el.type === 'ellipse' ||
+      el.type === 'diamond' ||
+      el.type === 'triangle' ||
+      el.type === 'line' ||
+      el.type === 'arrow')
+  ) {
+    return (
+      <g style={selOutline}>
+        <SketchyShape el={el} />
+      </g>
+    );
+  }
 
   if (el.type === 'stroke') {
     const d = strokeToPath(el.points, el.tool, el.strokeWidth * 2);
