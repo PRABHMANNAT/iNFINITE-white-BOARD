@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/brand/logo';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/theme/theme-toggle';
 
 export function LandingNav() {
   return (
@@ -26,6 +27,7 @@ export function LandingNav() {
           ))}
         </div>
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Link href="/sign-in" className="hidden sm:inline-flex">
             <Button variant="ghost" size="sm">
               Sign in

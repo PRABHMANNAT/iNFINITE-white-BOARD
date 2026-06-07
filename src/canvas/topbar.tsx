@@ -6,6 +6,7 @@ import { Share2, Users, MoreHorizontal, Check } from 'lucide-react';
 import { Logo } from '@/components/brand/logo';
 import { Button } from '@/components/ui/button';
 import { ExportMenu } from './export-menu';
+import { ThemeToggle } from '@/components/theme/theme-toggle';
 
 export function CanvasTopbar() {
   const [title, setTitle] = useState('Untitled board');
@@ -27,6 +28,7 @@ export function CanvasTopbar() {
         {saved === 'saved' ? 'Saved' : 'Saving…'}
       </div>
       <div className="mx-1 h-5 w-px bg-border" />
+      <ThemeToggle compact />
       <Button variant="ghost" size="sm">
         <Users className="h-3.5 w-3.5" />
         Invite
