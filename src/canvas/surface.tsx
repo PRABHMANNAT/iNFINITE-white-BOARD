@@ -6,6 +6,7 @@ import { usePanZoom } from './use-pan-zoom';
 import { useDrawing } from './use-drawing';
 import { useSelection } from './use-selection';
 import { useEraser } from './use-eraser';
+import { useImageInput } from './use-image-input';
 import { useShortcuts } from './use-shortcuts';
 import { useCanvasHotkeys } from './use-canvas-hotkeys';
 import { GridLayer } from './grid';
@@ -23,6 +24,7 @@ export function CanvasSurface() {
   useDrawing(containerRef);
   useSelection(containerRef, marqueeRef);
   useEraser(containerRef);
+  useImageInput(containerRef);
   useShortcuts();
   useCanvasHotkeys();
 
