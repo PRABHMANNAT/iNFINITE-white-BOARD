@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
+import Fuse from 'fuse.js';
 import { CATEGORIES, TEMPLATES, type Template } from '@/lib/templates';
 import { LandingNav } from '@/components/landing/nav';
 import { LandingFooter } from '@/components/landing/footer';
@@ -11,14 +12,26 @@ export default function TemplatesPage() {
   const [active, setActive] = useState<Template['category'] | 'all'>('all');
   const [q, setQ] = useState('');
 
+  const fuse = useMemo(
+    () =>
+      new Fuse(TEMPLATES, {
+        keys: [
+          { name: 'title', weight: 0.7 },
+          { name: 'description', weight: 0.2 },
+          { name: 'category', weight: 0.1 },
+        ],
+        threshold: 0.35,
+        ignoreLocation: true,
+      }),
+    []
+  );
+
   const filtered = useMemo(() => {
-    return TEMPLATES.filter((t) => active === 'all' || t.category === active).filter(
-      (t) =>
-        !q ||
-        t.title.toLowerCase().includes(q.toLowerCase()) ||
-        t.description.toLowerCase().includes(q.toLowerCase())
-    );
-  }, [active, q]);
+    const base = q.trim()
+      ? fuse.search(q.trim()).map((r) => r.item)
+      : TEMPLATES;
+    return base.filter((t) => active === 'all' || t.category === active);
+  }, [active, q, fuse]);
 
   return (
     <>
