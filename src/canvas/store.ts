@@ -87,7 +87,8 @@ export const useCanvas = create<CanvasStore>((set, get) => ({
   tool: 'select',
   setTool: (t) => set({ tool: t }),
 
-  stroke: '#e4e4e7',
+  // currentColor follows the theme foreground via the SVG <g color="…" />
+  stroke: 'currentColor',
   fill: 'transparent',
   strokeWidth: 2,
   setStyle: (patch) => set((s) => ({ ...s, ...patch })),

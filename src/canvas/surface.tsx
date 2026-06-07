@@ -44,6 +44,7 @@ export function CanvasSurface() {
       >
         <g
           transform={`translate(${viewport.x} ${viewport.y}) scale(${viewport.zoom})`}
+          style={{ color: 'hsl(var(--fg))' }}
         >
           {elements.map((el) => (
             <ElementRenderer
