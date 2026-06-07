@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus, Minus, Maximize2, Grid3X3 } from 'lucide-react';
+import { Plus, Minus, Maximize2, Grid3X3, Brush } from 'lucide-react';
 import { useCanvas } from './store';
 import type { GridMode } from './types';
 import { cn } from '@/lib/cn';
@@ -13,6 +13,8 @@ export function ZoomControls() {
   const resetViewport = useCanvas((s) => s.resetViewport);
   const grid = useCanvas((s) => s.grid);
   const setGrid = useCanvas((s) => s.setGrid);
+  const shapeStyle = useCanvas((s) => s.shapeStyle);
+  const setShapeStyle = useCanvas((s) => s.setShapeStyle);
 
   const step = (delta: number) => {
     const next = Math.min(8, Math.max(0.1, viewport.zoom + delta));
@@ -66,6 +68,18 @@ export function ZoomControls() {
         )}
       >
         <Grid3X3 className="h-4 w-4" />
+      </button>
+      <button
+        onClick={() => setShapeStyle(shapeStyle === 'clean' ? 'sketchy' : 'clean')}
+        title={`Shape style: ${shapeStyle}`}
+        className={cn(
+          'flex h-8 w-8 items-center justify-center rounded-xl transition-colors',
+          shapeStyle === 'sketchy'
+            ? 'bg-bg-muted text-fg'
+            : 'text-fg-muted hover:bg-bg-muted hover:text-fg'
+        )}
+      >
+        <Brush className="h-4 w-4" />
       </button>
     </div>
   );
