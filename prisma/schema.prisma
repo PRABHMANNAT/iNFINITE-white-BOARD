@@ -1,0 +1,249 @@
+// IngenBoard — Prisma schema
+// Postgres 16 + pgvector for semantic search.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgvector(map: "vector")]
+}
+
+// ──────────────────────────────────────────────────────────────
+// Identity (mirrors Clerk; Clerk is source of truth)
+// ──────────────────────────────────────────────────────────────
+
+model User {
+  id          String   @id // Clerk user id
+  email       String   @unique
+  name        String?
+  avatarUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  memberships Membership[]
+  boards      Board[]      @relation("BoardOwner")
+  comments    Comment[]
+  reactions   Reaction[]
+  events      AuditEvent[]
+}
+
+// ──────────────────────────────────────────────────────────────
+// Workspaces & permissions
+// ──────────────────────────────────────────────────────────────
+
+model Workspace {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  avatarUrl   String?
+  plan        Plan     @default(FREE)
+  createdAt   DateTime @default(now())
+
+  members     Membership[]
+  boards      Board[]
+  templates   Template[]
+  events      AuditEvent[]
+}
+
+enum Plan {
+  FREE
+  PRO
+  TEAM
+  ENTERPRISE
+}
+
+model Membership {
+  id          String     @id @default(cuid())
+  userId      String
+  workspaceId String
+  role        Role       @default(EDITOR)
+  createdAt   DateTime   @default(now())
+
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, workspaceId])
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  EDITOR
+  VIEWER
+  GUEST
+}
+
+// ──────────────────────────────────────────────────────────────
+// Boards
+// ──────────────────────────────────────────────────────────────
+
+model Board {
+  id           String   @id @default(cuid())
+  workspaceId  String
+  ownerId      String
+  title        String   @default("Untitled")
+  emoji        String?
+  isStarred    Boolean  @default(false)
+  isArchived   Boolean  @default(false)
+  visibility   Visibility @default(WORKSPACE)
+  yjsState     Bytes?   // last full Yjs document snapshot
+  thumbnailUrl String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  workspace    Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  owner        User      @relation("BoardOwner", fields: [ownerId], references: [id])
+  snapshots    Snapshot[]
+  comments     Comment[]
+  assets       Asset[]
+  embeddings   BoardEmbedding[]
+  shares       BoardShare[]
+
+  @@index([workspaceId])
+  @@index([ownerId])
+}
+
+enum Visibility {
+  PRIVATE
+  WORKSPACE
+  LINK
+  PUBLIC
+}
+
+model BoardShare {
+  id        String   @id @default(cuid())
+  boardId   String
+  email     String?
+  role      Role     @default(VIEWER)
+  token     String?  @unique
+  createdAt DateTime @default(now())
+
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  @@index([boardId])
+}
+
+model Snapshot {
+  id        String   @id @default(cuid())
+  boardId   String
+  yjsState  Bytes
+  label     String?
+  createdAt DateTime @default(now())
+
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  @@index([boardId, createdAt])
+}
+
+// ──────────────────────────────────────────────────────────────
+// Collab artifacts
+// ──────────────────────────────────────────────────────────────
+
+model Comment {
+  id        String   @id @default(cuid())
+  boardId   String
+  userId    String
+  parentId  String?
+  body      String
+  anchorX   Float?
+  anchorY   Float?
+  resolved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
+  parent    Comment? @relation("Thread", fields: [parentId], references: [id])
+  replies   Comment[] @relation("Thread")
+
+  @@index([boardId])
+}
+
+model Reaction {
+  id        String   @id @default(cuid())
+  boardId   String
+  userId    String
+  emoji     String
+  x         Float
+  y         Float
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([boardId])
+}
+
+// ──────────────────────────────────────────────────────────────
+// Storage
+// ──────────────────────────────────────────────────────────────
+
+model Asset {
+  id        String   @id @default(cuid())
+  boardId   String?
+  kind      AssetKind
+  url       String
+  size      Int
+  mime      String
+  createdAt DateTime @default(now())
+
+  board     Board?   @relation(fields: [boardId], references: [id], onDelete: SetNull)
+}
+
+enum AssetKind {
+  IMAGE
+  VIDEO
+  AUDIO
+  PDF
+  OTHER
+}
+
+// ──────────────────────────────────────────────────────────────
+// Templates
+// ──────────────────────────────────────────────────────────────
+
+model Template {
+  id           String   @id @default(cuid())
+  workspaceId  String?
+  slug         String   @unique
+  title        String
+  description  String
+  category     String
+  yjsState     Bytes
+  thumbnailUrl String?
+  createdAt    DateTime @default(now())
+
+  workspace    Workspace? @relation(fields: [workspaceId], references: [id])
+}
+
+// ──────────────────────────────────────────────────────────────
+// AI / Knowledge graph
+// ──────────────────────────────────────────────────────────────
+
+model BoardEmbedding {
+  id        String   @id @default(cuid())
+  boardId   String
+  chunk     String
+  embedding Unsupported("vector(1536)")
+  meta      Json
+  createdAt DateTime @default(now())
+
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  @@index([boardId])
+}
+
+model AuditEvent {
+  id          String   @id @default(cuid())
+  workspaceId String?
+  userId      String?
+  action      String
+  payload     Json
+  createdAt   DateTime @default(now())
+
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id])
+  user        User?      @relation(fields: [userId], references: [id])
+
+  @@index([workspaceId, createdAt])
+}
