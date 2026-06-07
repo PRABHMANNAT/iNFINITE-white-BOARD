@@ -2,15 +2,7 @@
 
 import { memo } from 'react';
 import type { CanvasElement } from './types';
-
-function strokePoints(points: number[]) {
-  if (points.length < 2) return '';
-  let d = `M ${points[0]} ${points[1]}`;
-  for (let i = 2; i < points.length; i += 2) {
-    d += ` L ${points[i]} ${points[i + 1]}`;
-  }
-  return d;
-}
+import { strokeToPath } from './freehand';
 
 export const ElementRenderer = memo(function ElementRenderer({
   el,
@@ -24,14 +16,12 @@ export const ElementRenderer = memo(function ElementRenderer({
     : undefined;
 
   if (el.type === 'stroke') {
+    const d = strokeToPath(el.points, el.tool, el.strokeWidth * 2);
     return (
       <path
-        d={strokePoints(el.points)}
-        stroke={el.stroke}
-        strokeWidth={el.strokeWidth}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
+        d={d}
+        fill={el.stroke}
+        stroke="none"
         opacity={el.opacity}
         style={selOutline}
       />
