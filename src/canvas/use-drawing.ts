@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { nanoid } from '@/lib/id';
 import { useCanvas } from './store';
 import type { CanvasElement, StrokeElement } from './types';
+import { nextStickyColor } from './sticky-colors';
 
 function screenToWorld(
   clientX: number,
@@ -63,6 +64,8 @@ export function useDrawing(ref: React.RefObject<HTMLElement | null>) {
       }
 
       if (tool === 'sticky') {
+        const colorIdx = useCanvas.getState().elements.filter((e) => e.type === 'sticky').length;
+        const color = nextStickyColor(colorIdx);
         const draft: CanvasElement = {
           type: 'sticky',
           id: nanoid(),
@@ -71,8 +74,8 @@ export function useDrawing(ref: React.RefObject<HTMLElement | null>) {
           width: 180,
           height: 120,
           text: '',
-          stroke: '#facc15',
-          fill: '#fef08a',
+          stroke: color.stroke,
+          fill: color.fill,
           strokeWidth: 1,
           opacity: 1,
           rotation: 0,
