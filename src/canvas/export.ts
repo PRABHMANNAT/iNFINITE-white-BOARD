@@ -1,5 +1,6 @@
 'use client';
 
+import { toast } from 'sonner';
 import { useCanvas } from './store';
 
 function downloadBlob(blob: Blob, filename: string) {
@@ -27,6 +28,7 @@ export function exportJSON() {
     new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }),
     `ingenboard-${Date.now()}.json`
   );
+  toast.success('Exported as JSON');
 }
 
 export function exportSVG() {
@@ -42,6 +44,7 @@ export function exportSVG() {
     new Blob([serialized], { type: 'image/svg+xml' }),
     `ingenboard-${Date.now()}.svg`
   );
+  toast.success('Exported as SVG');
 }
 
 export async function exportPNG() {
@@ -80,7 +83,12 @@ export async function exportPNG() {
   ctx.fillRect(0, 0, w, h);
   ctx.drawImage(img, 0, 0, w, h);
   canvas.toBlob((blob) => {
-    if (blob) downloadBlob(blob, `ingenboard-${Date.now()}.png`);
+    if (blob) {
+      downloadBlob(blob, `ingenboard-${Date.now()}.png`);
+      toast.success('Exported as PNG');
+    } else {
+      toast.error('PNG export failed');
+    }
   });
 }
 
@@ -99,8 +107,10 @@ export function importJSON(file: File) {
           grid: data.grid ?? useCanvas.getState().grid,
           selectedIds: new Set(),
         });
+        toast.success(`Imported ${data.elements.length} element${data.elements.length === 1 ? '' : 's'}`);
         resolve();
       } catch (e) {
+        toast.error('Import failed — invalid IngenBoard JSON');
         reject(e);
       }
     };
