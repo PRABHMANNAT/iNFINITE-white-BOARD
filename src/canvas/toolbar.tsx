@@ -7,6 +7,7 @@ import {
   Highlighter,
   PenLine,
   Eraser,
+  Zap,
   Square,
   Circle,
   Diamond,
@@ -40,6 +41,7 @@ const TOOLS: ToolDef[] = [
   { id: 'highlighter', label: 'Highlighter', icon: Highlighter, group: 'b' },
   { id: 'marker', label: 'Marker', icon: PenLine, group: 'b' },
   { id: 'eraser', label: 'Eraser', shortcut: 'E', icon: Eraser, group: 'b' },
+  { id: 'laser', label: 'Laser pointer', icon: Zap, group: 'b' },
 
   { id: 'rectangle', label: 'Rectangle', shortcut: 'R', icon: Square, group: 'c' },
   { id: 'ellipse', label: 'Ellipse', shortcut: 'O', icon: Circle, group: 'c' },

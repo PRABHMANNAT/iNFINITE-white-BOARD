@@ -2,6 +2,7 @@
 
 import { Plus, Minus, Maximize2, Grid3X3, Brush } from 'lucide-react';
 import { useCanvas } from './store';
+import { elementBBox } from './hit-test';
 import type { GridMode } from './types';
 import { cn } from '@/lib/cn';
 
@@ -19,6 +20,37 @@ export function ZoomControls() {
   const step = (delta: number) => {
     const next = Math.min(8, Math.max(0.1, viewport.zoom + delta));
     setViewport({ zoom: next });
+  };
+
+  const fitToContent = () => {
+    const { elements, selectedIds } = useCanvas.getState();
+    const targets =
+      selectedIds.size > 0
+        ? elements.filter((e) => selectedIds.has(e.id))
+        : elements;
+    if (targets.length === 0) {
+      resetViewport();
+      return;
+    }
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const el of targets) {
+      const b = elementBBox(el);
+      if (b.x < minX) minX = b.x;
+      if (b.y < minY) minY = b.y;
+      if (b.x + b.w > maxX) maxX = b.x + b.w;
+      if (b.y + b.h > maxY) maxY = b.y + b.h;
+    }
+    const pad = 80;
+    const ww = window.innerWidth;
+    const wh = window.innerHeight;
+    const cw = maxX - minX + pad * 2;
+    const ch = maxY - minY + pad * 2;
+    const zoom = Math.min(8, Math.max(0.1, Math.min(ww / cw, wh / ch)));
+    setViewport({
+      zoom,
+      x: ww / 2 - ((minX + maxX) / 2) * zoom,
+      y: wh / 2 - ((minY + maxY) / 2) * zoom,
+    });
   };
 
   const cycleGrid = () => {
@@ -51,8 +83,8 @@ export function ZoomControls() {
       </button>
       <div className="mx-1 h-6 w-px bg-border" />
       <button
-        onClick={resetViewport}
-        title="Fit to screen"
+        onClick={fitToContent}
+        title="Fit content to screen"
         className="flex h-8 w-8 items-center justify-center rounded-xl text-fg-muted hover:bg-bg-muted hover:text-fg"
       >
         <Maximize2 className="h-4 w-4" />
