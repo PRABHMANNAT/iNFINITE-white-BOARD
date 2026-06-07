@@ -40,6 +40,7 @@ export function CanvasSurface() {
   return (
     <div
       ref={containerRef}
+      data-canvas-surface
       className="relative h-full w-full overflow-hidden touch-none select-none"
       style={{
         background: 'hsl(var(--bg))',
