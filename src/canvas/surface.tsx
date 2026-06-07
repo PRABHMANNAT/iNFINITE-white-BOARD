@@ -5,6 +5,7 @@ import { useCanvas } from './store';
 import { usePanZoom } from './use-pan-zoom';
 import { useDrawing } from './use-drawing';
 import { useSelection } from './use-selection';
+import { useEraser } from './use-eraser';
 import { useShortcuts } from './use-shortcuts';
 import { GridLayer } from './grid';
 import { ElementRenderer } from './element-renderer';
@@ -20,6 +21,7 @@ export function CanvasSurface() {
   usePanZoom(containerRef);
   useDrawing(containerRef);
   useSelection(containerRef, marqueeRef);
+  useEraser(containerRef);
   useShortcuts();
 
   const cursor =
