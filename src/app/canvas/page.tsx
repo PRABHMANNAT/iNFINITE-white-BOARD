@@ -7,6 +7,7 @@ import { AICopilot } from '@/canvas/ai-copilot';
 import { CanvasTopbar } from '@/canvas/topbar';
 import { ShortcutsHint } from '@/canvas/shortcuts-hint';
 import { SelectionToolbar } from '@/canvas/selection-toolbar';
+import { CommandPalette } from '@/canvas/command-palette';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
 export const dynamic = 'force-dynamic';
@@ -48,6 +49,8 @@ export default function CanvasPage() {
       <div className="pointer-events-none absolute bottom-5 left-3 z-30">
         <ShortcutsHint />
       </div>
+
+      <CommandPalette />
     </div>
     </TooltipProvider>
   );
