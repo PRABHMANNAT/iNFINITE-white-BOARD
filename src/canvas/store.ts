@@ -52,6 +52,8 @@ type CanvasStore = {
   // grid
   grid: GridMode;
   setGrid: (g: GridMode) => void;
+  snapToGrid: boolean;
+  setSnapToGrid: (v: boolean) => void;
 
   // shape rendering style (clean vs sketchy)
   shapeStyle: ShapeStyle;
@@ -201,6 +203,8 @@ export const useCanvas = create<CanvasStore>()(
 
   grid: 'dots',
   setGrid: (g) => set({ grid: g }),
+  snapToGrid: false,
+  setSnapToGrid: (v) => set({ snapToGrid: v }),
 
   shapeStyle: 'clean',
   setShapeStyle: (s) => set({ shapeStyle: s }),
@@ -252,6 +256,7 @@ export const useCanvas = create<CanvasStore>()(
         elements: s.elements,
         viewport: s.viewport,
         grid: s.grid,
+        snapToGrid: s.snapToGrid,
         shapeStyle: s.shapeStyle,
         stroke: s.stroke,
         fill: s.fill,
