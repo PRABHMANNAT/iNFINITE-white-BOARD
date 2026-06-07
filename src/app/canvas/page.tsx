@@ -8,6 +8,7 @@ import { CanvasTopbar } from '@/canvas/topbar';
 import { ShortcutsHint } from '@/canvas/shortcuts-hint';
 import { SelectionToolbar } from '@/canvas/selection-toolbar';
 import { CommandPalette } from '@/canvas/command-palette';
+import { CanvasEmptyState } from '@/canvas/empty-state';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
 export const dynamic = 'force-dynamic';
@@ -17,6 +18,7 @@ export default function CanvasPage() {
     <TooltipProvider>
     <div className="relative h-screen w-screen overflow-hidden">
       <CanvasSurface />
+      <CanvasEmptyState />
 
       {/* Top bar */}
       <div className="pointer-events-none absolute inset-x-0 top-3 z-30 flex items-start justify-center px-3">
