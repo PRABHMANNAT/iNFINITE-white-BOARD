@@ -1,10 +1,19 @@
+import { LandingNav } from '@/components/landing/nav';
+import { LandingHero } from '@/components/landing/hero';
+import { LandingFeatures } from '@/components/landing/features';
+import { LandingAISection } from '@/components/landing/ai-section';
+import { LandingFooter } from '@/components/landing/footer';
+
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen items-center justify-center p-12">
-      <div className="text-center">
-        <h1 className="text-4xl font-semibold tracking-tight">IngenBoard</h1>
-        <p className="mt-3 text-fg-muted">Scaffold ready. Landing page coming next.</p>
-      </div>
-    </main>
+    <>
+      <LandingNav />
+      <main>
+        <LandingHero />
+        <LandingFeatures />
+        <LandingAISection />
+      </main>
+      <LandingFooter />
+    </>
   );
 }
