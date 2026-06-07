@@ -6,11 +6,13 @@ import { Minimap } from '@/canvas/minimap';
 import { AICopilot } from '@/canvas/ai-copilot';
 import { CanvasTopbar } from '@/canvas/topbar';
 import { ShortcutsHint } from '@/canvas/shortcuts-hint';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 export const dynamic = 'force-dynamic';
 
 export default function CanvasPage() {
   return (
+    <TooltipProvider>
     <div className="relative h-screen w-screen overflow-hidden">
       <CanvasSurface />
 
@@ -41,5 +43,6 @@ export default function CanvasPage() {
         <ShortcutsHint />
       </div>
     </div>
+    </TooltipProvider>
   );
 }
