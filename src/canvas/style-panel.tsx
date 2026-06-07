@@ -3,8 +3,9 @@
 import { useCanvas } from './store';
 import { cn } from '@/lib/cn';
 
+// First swatch is `currentColor` — follows theme foreground.
 const STROKES = [
-  '#e4e4e7',
+  'currentColor',
   '#f43f5e',
   '#f97316',
   '#eab308',
@@ -13,7 +14,7 @@ const STROKES = [
   '#6366f1',
   '#a855f7',
   '#ec4899',
-  '#0a0a0f',
+  '#71717a',
 ];
 
 const FILLS = [
@@ -47,9 +48,12 @@ export function StylePanel() {
               aria-label={`Stroke ${c}`}
               className={cn(
                 'h-6 w-6 rounded-md border transition-transform',
-                stroke === c ? 'border-accent scale-110' : 'border-border'
+                stroke === c ? 'border-accent scale-110' : 'border-border',
+                c === 'currentColor' && 'text-fg'
               )}
-              style={{ background: c }}
+              style={{
+                background: c === 'currentColor' ? 'currentColor' : c,
+              }}
             />
           ))}
         </div>
