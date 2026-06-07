@@ -7,6 +7,7 @@ import { useDrawing } from './use-drawing';
 import { useSelection } from './use-selection';
 import { useEraser } from './use-eraser';
 import { useImageInput } from './use-image-input';
+import { useLaser, strokeOpacity } from './use-laser';
 import { useShortcuts } from './use-shortcuts';
 import { useCanvasHotkeys } from './use-canvas-hotkeys';
 import { GridLayer } from './grid';
@@ -27,6 +28,7 @@ export function CanvasSurface() {
   useImageInput(containerRef);
   useShortcuts();
   useCanvasHotkeys();
+  const laser = useLaser(containerRef);
 
   const cursor =
     tool === 'pan'
@@ -72,6 +74,29 @@ export function CanvasSurface() {
             strokeWidth={1 / viewport.zoom}
             pointerEvents="none"
           />
+          {laser.strokes.map((s) => {
+            const d = (() => {
+              if (s.points.length < 2) return '';
+              let p = `M ${s.points[0]} ${s.points[1]}`;
+              for (let i = 2; i < s.points.length; i += 2)
+                p += ` L ${s.points[i]} ${s.points[i + 1]}`;
+              return p;
+            })();
+            return (
+              <path
+                key={s.id}
+                d={d}
+                stroke="#ef4444"
+                strokeWidth={5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+                opacity={strokeOpacity(s)}
+                style={{ filter: 'drop-shadow(0 0 6px #ef4444)' }}
+                pointerEvents="none"
+              />
+            );
+          })}
         </g>
       </svg>
     </div>

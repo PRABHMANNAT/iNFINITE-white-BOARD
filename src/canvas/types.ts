@@ -7,6 +7,7 @@ export type Tool =
   | 'highlighter'
   | 'marker'
   | 'eraser'
+  | 'laser'
   | 'rectangle'
   | 'ellipse'
   | 'diamond'
