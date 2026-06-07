@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { ThemeProvider } from '@/components/theme/theme-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -19,8 +20,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
