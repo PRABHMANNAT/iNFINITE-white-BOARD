@@ -206,15 +206,27 @@ export const ElementRenderer = memo(function ElementRenderer({
           height={el.height - 16}
         >
           <div
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) =>
+              useCanvas.getState().updateElement(el.id, {
+                text: (e.target as HTMLDivElement).innerText,
+              })
+            }
+            onPointerDown={(e) => e.stopPropagation()}
+            onWheel={(e) => e.stopPropagation()}
             style={{
               fontFamily: 'ui-sans-serif, system-ui, sans-serif',
               fontSize: 14,
               color: '#1f2937',
               whiteSpace: 'pre-wrap',
               wordBreak: 'break-word',
+              outline: 'none',
+              width: '100%',
+              height: '100%',
             }}
           >
-            {el.text}
+            {el.text || ''}
           </div>
         </foreignObject>
       </g>
