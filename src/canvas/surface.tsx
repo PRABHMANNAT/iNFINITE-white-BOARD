@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { useCanvas } from './store';
 import { usePanZoom } from './use-pan-zoom';
 import { useDrawing } from './use-drawing';
+import { useShortcuts } from './use-shortcuts';
 import { GridLayer } from './grid';
 import { ElementRenderer } from './element-renderer';
 
@@ -16,6 +17,7 @@ export function CanvasSurface() {
 
   usePanZoom(containerRef);
   useDrawing(containerRef);
+  useShortcuts();
 
   const cursor =
     tool === 'pan'

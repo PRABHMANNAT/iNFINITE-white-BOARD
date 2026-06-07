@@ -5,6 +5,7 @@ import { ZoomControls } from '@/canvas/zoom-controls';
 import { Minimap } from '@/canvas/minimap';
 import { AICopilot } from '@/canvas/ai-copilot';
 import { CanvasTopbar } from '@/canvas/topbar';
+import { ShortcutsHint } from '@/canvas/shortcuts-hint';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,6 +34,11 @@ export default function CanvasPage() {
         <AICopilot />
         <Minimap />
         <ZoomControls />
+      </div>
+
+      {/* Bottom-left helpers */}
+      <div className="pointer-events-none absolute bottom-5 left-3 z-30">
+        <ShortcutsHint />
       </div>
     </div>
   );
