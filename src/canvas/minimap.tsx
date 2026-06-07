@@ -36,6 +36,7 @@ function elementBounds(el: { x?: number; y?: number; width?: number; height?: nu
 export function Minimap() {
   const elements = useCanvas((s) => s.elements);
   const viewport = useCanvas((s) => s.viewport);
+  const setViewport = useCanvas((s) => s.setViewport);
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
 
   useEffect(() => {
@@ -67,9 +68,27 @@ export function Minimap() {
   const vx = -viewport.x / viewport.zoom;
   const vy = -viewport.y / viewport.zoom;
 
+  const onJump = (e: React.MouseEvent<SVGElement>) => {
+    if (!size) return;
+    const rect = (e.currentTarget as SVGElement).getBoundingClientRect();
+    const fx = (e.clientX - rect.left) / W;
+    const fy = (e.clientY - rect.top) / H;
+    const worldX = bounds.minX + fx * bounds.width;
+    const worldY = bounds.minY + fy * bounds.height;
+    setViewport({
+      x: size.w / 2 - worldX * viewport.zoom,
+      y: size.h / 2 - worldY * viewport.zoom,
+    });
+  };
+
   return (
-    <div className="pointer-events-none glass rounded-xl p-1.5 shadow-xl">
-      <svg width={W} height={H} className="block rounded-lg">
+    <div className="pointer-events-auto glass rounded-xl p-1.5 shadow-xl">
+      <svg
+        width={W}
+        height={H}
+        className="block rounded-lg cursor-crosshair"
+        onClick={onJump}
+      >
         <rect width={W} height={H} fill="hsl(var(--bg-subtle))" />
         <g transform={`translate(${-bounds.minX * s} ${-bounds.minY * s}) scale(${s})`}>
           {elements.map((el) => {
