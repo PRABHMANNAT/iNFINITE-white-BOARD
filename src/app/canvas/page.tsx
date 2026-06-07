@@ -6,6 +6,7 @@ import { Minimap } from '@/canvas/minimap';
 import { AICopilot } from '@/canvas/ai-copilot';
 import { CanvasTopbar } from '@/canvas/topbar';
 import { ShortcutsHint } from '@/canvas/shortcuts-hint';
+import { SelectionToolbar } from '@/canvas/selection-toolbar';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
 export const dynamic = 'force-dynamic';
@@ -19,6 +20,11 @@ export default function CanvasPage() {
       {/* Top bar */}
       <div className="pointer-events-none absolute inset-x-0 top-3 z-30 flex items-start justify-center px-3">
         <CanvasTopbar />
+      </div>
+
+      {/* Floating selection actions */}
+      <div className="pointer-events-none absolute inset-x-0 top-20 z-30 flex justify-center">
+        <SelectionToolbar />
       </div>
 
       {/* Bottom toolbar */}
