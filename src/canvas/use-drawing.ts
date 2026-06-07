@@ -5,6 +5,7 @@ import { nanoid } from '@/lib/id';
 import { useCanvas } from './store';
 import type { CanvasElement, StrokeElement } from './types';
 import { nextStickyColor } from './sticky-colors';
+import { snap } from './snap';
 
 function screenToWorld(
   clientX: number,
@@ -141,9 +142,12 @@ export function useDrawing(ref: React.RefObject<HTMLElement | null>) {
         return;
       }
 
-      useCanvas
-        .getState()
-        .updateElement(d.id, { width: p.x - s.x, height: p.y - s.y });
+      const st = useCanvas.getState();
+      const snapped =
+        st.snapToGrid && st.tool !== 'pen' && st.tool !== 'highlighter' && st.tool !== 'marker'
+          ? { x: snap(p.x, st.grid), y: snap(p.y, st.grid) }
+          : p;
+      st.updateElement(d.id, { width: snapped.x - s.x, height: snapped.y - s.y });
     };
 
     const onPointerUp = (e: PointerEvent) => {
