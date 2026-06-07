@@ -1,6 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type {
   CanvasElement,
   GridMode,
@@ -58,7 +59,9 @@ type CanvasStore = {
 
 const initialViewport: ViewportState = { x: 0, y: 0, zoom: 1 };
 
-export const useCanvas = create<CanvasStore>((set, get) => ({
+export const useCanvas = create<CanvasStore>()(
+  persist(
+    (set, get) => ({
   viewport: initialViewport,
   setViewport: (next) =>
     set((s) => ({ viewport: { ...s.viewport, ...next } })),
@@ -132,4 +135,30 @@ export const useCanvas = create<CanvasStore>((set, get) => ({
         elements: next.elements,
       };
     }),
-}));
+    }),
+    {
+      name: 'ingenboard:canvas',
+      version: 2,
+      storage: createJSONStorage(() => {
+        // localStorage is not available during SSR
+        if (typeof window === 'undefined') {
+          return {
+            getItem: () => null,
+            setItem: () => undefined,
+            removeItem: () => undefined,
+          };
+        }
+        return window.localStorage;
+      }),
+      partialize: (s) => ({
+        elements: s.elements,
+        viewport: s.viewport,
+        grid: s.grid,
+        shapeStyle: s.shapeStyle,
+        stroke: s.stroke,
+        fill: s.fill,
+        strokeWidth: s.strokeWidth,
+      }),
+    }
+  )
+);
