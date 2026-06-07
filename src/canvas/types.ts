@@ -55,6 +55,13 @@ export type StickyElement = ShapeBase & {
   text: string;
 };
 
+export type ImageElement = ShapeBase & {
+  type: 'image';
+  src: string; // data URL or remote URL
+  naturalWidth?: number;
+  naturalHeight?: number;
+};
+
 export type CanvasElement =
   | StrokeElement
   | RectangleElement
@@ -64,7 +71,8 @@ export type CanvasElement =
   | LineElement
   | ArrowElement
   | TextElement
-  | StickyElement;
+  | StickyElement
+  | ImageElement;
 
 export type ViewportState = {
   x: number;

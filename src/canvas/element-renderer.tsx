@@ -171,6 +171,21 @@ export const ElementRenderer = memo(function ElementRenderer({
     );
   }
 
+  if (el.type === 'image') {
+    return (
+      <image
+        href={el.src}
+        x={el.x}
+        y={el.y}
+        width={Math.abs(el.width)}
+        height={Math.abs(el.height)}
+        opacity={el.opacity}
+        preserveAspectRatio="xMidYMid meet"
+        style={selOutline}
+      />
+    );
+  }
+
   if (el.type === 'sticky') {
     return (
       <g style={selOutline} opacity={el.opacity}>
