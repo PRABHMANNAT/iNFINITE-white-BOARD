@@ -2,6 +2,7 @@
 
 import { useCanvas } from './store';
 import { cn } from '@/lib/cn';
+import { ColorPicker } from './color-picker';
 
 // First swatch is `currentColor` — follows theme foreground.
 const STROKES = [
@@ -56,6 +57,11 @@ export function StylePanel() {
               }}
             />
           ))}
+          <ColorPicker
+            value={stroke}
+            onChange={(c) => setStyle({ stroke: c })}
+            label="Custom stroke"
+          />
         </div>
       </div>
       <div>
@@ -75,6 +81,11 @@ export function StylePanel() {
               style={c === 'transparent' ? undefined : { background: c }}
             />
           ))}
+          <ColorPicker
+            value={fill}
+            onChange={(c) => setStyle({ fill: c })}
+            label="Custom fill"
+          />
         </div>
       </div>
       <div>
