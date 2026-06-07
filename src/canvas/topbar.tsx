@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Share2, Users, MoreHorizontal, Check } from 'lucide-react';
 import { Logo } from '@/components/brand/logo';
 import { Button } from '@/components/ui/button';
+import { ExportMenu } from './export-menu';
 
 export function CanvasTopbar() {
   const [title, setTitle] = useState('Untitled board');
@@ -30,6 +31,7 @@ export function CanvasTopbar() {
         <Users className="h-3.5 w-3.5" />
         Invite
       </Button>
+      <ExportMenu />
       <Button size="sm">
         <Share2 className="h-3.5 w-3.5" />
         Share
