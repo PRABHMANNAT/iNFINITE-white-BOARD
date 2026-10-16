@@ -562,6 +562,15 @@ export const GithubIcon = createIcon(
   modifiedTablerIconProps,
 );
 
+export const InstagramIcon = createIcon(
+  <>
+    <rect x="2.5" y="2.5" width="15" height="15" rx="4" />
+    <circle cx="10" cy="10" r="3.5" />
+    <circle cx="14.6" cy="5.5" r="0.8" fill="currentColor" stroke="none" />
+  </>,
+  modifiedTablerIconProps,
+);
+
 export const DiscordIcon = createIcon(
   <g strokeWidth="1.25">
     <path d="M7.5 10.833a.833.833 0 1 0 0-1.666.833.833 0 0 0 0 1.666ZM12.5 10.833a.833.833 0 1 0 0-1.666.833.833 0 0 0 0 1.666ZM6.25 6.25c2.917-.833 4.583-.833 7.5 0M5.833 13.75c2.917.833 5.417.833 8.334 0" />
