@@ -22,11 +22,8 @@ export default function NotFound() {
         The page you&apos;re looking for has been zoomed out of view.
       </p>
       <div className="mt-6 flex gap-2">
-        <Link href="/">
-          <Button>Back to home</Button>
-        </Link>
         <Link href="/canvas">
-          <Button variant="outline">Open canvas</Button>
+          <Button>Open canvas</Button>
         </Link>
       </div>
     </main>

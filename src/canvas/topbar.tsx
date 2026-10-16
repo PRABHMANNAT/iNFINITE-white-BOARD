@@ -14,7 +14,7 @@ export function CanvasTopbar() {
 
   return (
     <div className="pointer-events-auto glass flex items-center gap-2 rounded-2xl px-2.5 py-2 shadow-xl">
-      <Link href="/" className="px-1">
+      <Link href="/canvas" className="px-1">
         <Logo />
       </Link>
       <div className="mx-1 h-5 w-px bg-border" />

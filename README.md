@@ -46,9 +46,9 @@ IngenBoard is a next-generation visual thinking platform — an infinite canvas 
 - **PNG, SVG, JSON** — robust capture via `html-to-image` at 2× pixel ratio
 - **Import** — drop a previously exported JSON back onto the canvas
 
-### Marketing
+### Navigation
 
-- **Landing page** — hero (animated with `framer-motion`), features grid, AI section, testimonials, pricing, FAQ, footer
+- **Home URL** — opens the canvas directly
 - **Templates gallery** — 22 templates across 9 categories, fuzzy search via `fuse.js`
 - **404 page** — branded
 - **PWA manifest** — installable

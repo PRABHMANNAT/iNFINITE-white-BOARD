@@ -7,15 +7,13 @@ export function LandingNav() {
   return (
     <header className="sticky top-4 z-40 mx-auto w-[min(1100px,calc(100%-2rem))]">
       <nav className="glass flex items-center justify-between rounded-2xl px-4 py-2.5">
-        <Link href="/" className="flex items-center">
+        <Link href="/canvas" className="flex items-center">
           <Logo />
         </Link>
         <div className="hidden items-center gap-1 md:flex">
           {[
-            ['Product', '#features'],
-            ['AI', '#ai'],
-            ['Templates', '#templates'],
-            ['Pricing', '#pricing'],
+            ['Canvas', '/canvas'],
+            ['Templates', '/templates'],
           ].map(([label, href]) => (
             <Link
               key={label}
