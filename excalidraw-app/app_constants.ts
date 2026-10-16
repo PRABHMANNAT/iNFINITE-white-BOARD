@@ -1,4 +1,7 @@
 // time constants (ms)
+export const PROJECT_GITHUB_URL =
+  "https://github.com/PRABHMANNAT/iNFINITE-white-BOARD";
+
 export const SAVE_TO_LOCAL_STORAGE_TIMEOUT = 300;
 export const INITIAL_SCENE_UPDATE_TIMEOUT = 5000;
 export const FILE_UPLOAD_TIMEOUT = 300;

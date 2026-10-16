@@ -90,6 +90,7 @@ import {
 import {
   FIREBASE_STORAGE_PREFIXES,
   isExcalidrawPlusSignedUser,
+  PROJECT_GITHUB_URL,
   STORAGE_KEYS,
   SYNC_BROWSER_TABS_TIMEOUT,
 } from "./app_constants";
@@ -1172,7 +1173,7 @@ const ExcalidrawWrapper = () => {
               },
             },
             {
-              label: "GitHub",
+              label: "Playground Sketch on GitHub",
               icon: GithubIcon,
               category: DEFAULT_CATEGORIES.links,
               predicate: true,
@@ -1187,7 +1188,7 @@ const ExcalidrawWrapper = () => {
               ],
               perform: () => {
                 window.open(
-                  "https://github.com/excalidraw/excalidraw",
+                  PROJECT_GITHUB_URL,
                   "_blank",
                   "noopener noreferrer",
                 );

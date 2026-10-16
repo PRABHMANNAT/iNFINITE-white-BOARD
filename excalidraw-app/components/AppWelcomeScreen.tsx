@@ -2,6 +2,7 @@ import { loginIcon } from "@excalidraw/excalidraw/components/icons";
 import { POINTER_EVENTS } from "@excalidraw/common";
 import { useI18n } from "@excalidraw/excalidraw/i18n";
 import { WelcomeScreen } from "@excalidraw/excalidraw/index";
+import { ExcalidrawLogo } from "@excalidraw/excalidraw/components/ExcalidrawLogo";
 import React from "react";
 
 import { isExcalidrawPlusSignedUser } from "../app_constants";
@@ -52,7 +53,12 @@ export const AppWelcomeScreen: React.FC<{
       <WelcomeScreen.Hints.ToolbarHint />
       <WelcomeScreen.Hints.HelpHint />
       <WelcomeScreen.Center>
-        <WelcomeScreen.Center.Logo />
+        <WelcomeScreen.Center.Logo>
+          <span className="project-brand">
+            <ExcalidrawLogo size="normal" />
+            <span>Playground Sketch</span>
+          </span>
+        </WelcomeScreen.Center.Logo>
         <WelcomeScreen.Center.Heading>
           {headingContent}
         </WelcomeScreen.Center.Heading>
