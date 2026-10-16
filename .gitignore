@@ -1,47 +1,29 @@
-# Dependencies
-node_modules/
-.pnp
-.pnp.js
-.yarn/
-.pnpm-store/
-
-# Build outputs
-.next/
-out/
-dist/
-build/
-*.tsbuildinfo
-next-env.d.ts
-
-# Env files
-.env
-.env*.local
-.env.development
-.env.production
-!.env.example
-
-# Logs
+.DS_Store
+.env.development.local
+.env.local
+.env.production.local
+.env.test.local
+.envrc
+.eslintcache
+.history
+.idea
+.vercel
+.vscode
+.yarn
+*.log
+*.tgz
+build
+dist
+firebase
+logs
+node_modules
 npm-debug.log*
+package-lock.json
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-.turbo
-
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-.DS_Store
-Thumbs.db
-
-# Testing
-coverage/
-.nyc_output/
-
-# Vercel
-.vercel
-
-# Misc
-*.local
-.cache/
+packages/excalidraw/types
+coverage
+dev-dist
+html
+meta*.json
+.claude
