@@ -1080,7 +1080,7 @@ const ExcalidrawWrapper = () => {
               },
             },
             {
-              label: "Playground Sketch on GitHub",
+              label: `${APP_NAME} on GitHub`,
               icon: GithubIcon,
               category: DEFAULT_CATEGORIES.links,
               predicate: true,

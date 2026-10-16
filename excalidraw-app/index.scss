@@ -71,6 +71,12 @@
     font-size: clamp(1.6rem, 4vw, 2.25rem);
     font-weight: 700;
     white-space: nowrap;
+
+    &__mark {
+      width: 3rem;
+      height: 3rem;
+      flex: 0 0 auto;
+    }
   }
 
   @media (max-width: 840px) {

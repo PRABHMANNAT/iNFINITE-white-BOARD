@@ -6,7 +6,7 @@ import {
 import { MainMenu } from "@excalidraw/excalidraw/index";
 import React from "react";
 
-import { isDevEnv } from "@excalidraw/common";
+import { APP_NAME, isDevEnv } from "@excalidraw/common";
 
 import type { Theme } from "@excalidraw/element/types";
 
@@ -50,7 +50,7 @@ export const AppMainMenu: React.FC<{
         Instagram · young.elonmusk
       </MainMenu.ItemLink>
       <MainMenu.ItemLink icon={GithubIcon} href={PROJECT_GITHUB_URL}>
-        Playground Sketch on GitHub
+        {APP_NAME} on GitHub
       </MainMenu.ItemLink>
       <MainMenu.ItemLink href={CREATOR_GITHUB_URL}>
         Developed with love and code by Prabhmannat

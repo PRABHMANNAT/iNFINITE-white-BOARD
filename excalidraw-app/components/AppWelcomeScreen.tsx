@@ -1,6 +1,6 @@
 import { useI18n } from "@excalidraw/excalidraw/i18n";
 import { WelcomeScreen } from "@excalidraw/excalidraw/index";
-import { ExcalidrawLogo } from "@excalidraw/excalidraw/components/ExcalidrawLogo";
+import { APP_NAME } from "@excalidraw/common";
 import React from "react";
 
 export const AppWelcomeScreen: React.FC<{
@@ -28,8 +28,8 @@ export const AppWelcomeScreen: React.FC<{
       <WelcomeScreen.Center>
         <WelcomeScreen.Center.Logo>
           <span className="project-brand">
-            <ExcalidrawLogo size="normal" />
-            <span>Playground Sketch</span>
+            <img className="project-brand__mark" src="/favicon.svg" alt="" />
+            <span>{APP_NAME}</span>
           </span>
         </WelcomeScreen.Center.Logo>
         <WelcomeScreen.Center.Heading>

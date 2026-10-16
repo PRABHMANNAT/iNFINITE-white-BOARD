@@ -226,10 +226,10 @@ export default defineConfig(({ mode }) => {
           maximumFileSizeToCacheInBytes: 2.3 * 1024 ** 2, // 2.3MB
         },
         manifest: {
-          short_name: "Playground Sketch",
-          name: "Playground Sketch",
+          short_name: "Planora",
+          name: "Planora",
           description:
-            "Playground Sketch is a collaborative whiteboard for drawing and sharing ideas.",
+            "Planora is an infinite whiteboard for mapping ideas, sketching plans, and working together.",
           icons: [
             {
               src: "android-chrome-192x192.png",
@@ -253,7 +253,7 @@ export default defineConfig(({ mode }) => {
             },
           ],
           start_url: "/",
-          id: "excalidraw",
+          id: "planora",
           display: "standalone",
           theme_color: "#121212",
           background_color: "#ffffff",

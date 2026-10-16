@@ -1,5 +1,6 @@
 import { Footer } from "@excalidraw/excalidraw/index";
 import { GithubIcon } from "@excalidraw/excalidraw/components/icons";
+import { APP_NAME } from "@excalidraw/common";
 import React from "react";
 
 import {
@@ -30,7 +31,7 @@ export const AppFooter = React.memo(
             href={PROJECT_GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Star Playground Sketch on GitHub"
+            aria-label={`Star ${APP_NAME} on GitHub`}
           >
             {GithubIcon}
             <span>Star on GitHub</span>
